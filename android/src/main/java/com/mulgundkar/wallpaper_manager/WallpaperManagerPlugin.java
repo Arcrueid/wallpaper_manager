@@ -3,28 +3,20 @@ package com.mulgundkar.wallpaper_manager;
 import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
 import android.app.WallpaperManager;
-import android.content.ComponentName;
 import android.content.Context;
-import android.content.Intent;
 import android.content.res.AssetFileDescriptor;
 import android.content.res.AssetManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Rect;
 import android.os.Build;
-import android.os.Environment;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.lang.reflect.Array;
 
 import androidx.annotation.NonNull;
-import io.flutter.Log;
-import io.flutter.app.FlutterApplication;
-import io.flutter.embedding.engine.FlutterEngine;
-import io.flutter.embedding.engine.loader.FlutterLoader;
+import io.flutter.FlutterInjector;
 import io.flutter.embedding.engine.plugins.FlutterPlugin;
-import io.flutter.embedding.engine.plugins.PluginRegistry;
 import io.flutter.plugin.common.MethodCall;
 import io.flutter.plugin.common.MethodChannel;
 import io.flutter.plugin.common.MethodChannel.MethodCallHandler;
@@ -38,12 +30,13 @@ public class WallpaperManagerPlugin implements FlutterPlugin, MethodCallHandler 
     private static Context context;
 
     @Override
-    public void onAttachedToEngine(@NonNull FlutterPluginBinding flutterPluginBinding) {
-        context = flutterPluginBinding.getApplicationContext();
-        final MethodChannel channel = new MethodChannel(flutterPluginBinding.getFlutterEngine().getDartExecutor(), "wallpaper_manager");
+    public void onAttachedToEngine(@NonNull FlutterPluginBinding binding) {
+        context = binding.getApplicationContext();
+        final MethodChannel channel = new MethodChannel(binding.getBinaryMessenger(), "wallpaper_manager");
         channel.setMethodCallHandler(this);
     }
 
+    @SuppressWarnings("deprecation")
     public static void registerWith(Registrar pluginRegistrar) {
         context = pluginRegistrar.context();
         final MethodChannel channel = new MethodChannel(pluginRegistrar.messenger(), "wallpaper_manager");
@@ -126,7 +119,7 @@ public class WallpaperManagerPlugin implements FlutterPlugin, MethodCallHandler 
                 Bitmap bitmap = BitmapFactory.decodeStream(inputStream);
                 result = wm.setBitmap(bitmap, null, false, wallpaperLocation);
             } else {
-                String assetLookupKey = FlutterLoader.getInstance().getLookupKeyForAsset(assetPath);
+                String assetLookupKey = FlutterInjector.instance().flutterLoader().getLookupKeyForAsset(assetPath);
                 AssetManager assetManager = context.getAssets();
                 AssetFileDescriptor assetFileDescriptor = assetManager.openFd(assetLookupKey);
                 InputStream inputStream = assetFileDescriptor.createInputStream();
@@ -149,7 +142,7 @@ public class WallpaperManagerPlugin implements FlutterPlugin, MethodCallHandler 
                 Bitmap bitmap = BitmapFactory.decodeStream(inputStream);
                 result = wm.setBitmap(bitmap, new Rect(left, top, right, bottom), false, wallpaperLocation);
             } else {
-                String assetLookupKey = FlutterLoader.getInstance().getLookupKeyForAsset(assetPath);
+                String assetLookupKey = FlutterInjector.instance().flutterLoader().getLookupKeyForAsset(assetPath);
                 AssetManager assetManager = context.getAssets();
                 AssetFileDescriptor assetFileDescriptor = assetManager.openFd(assetLookupKey);
                 InputStream inputStream = assetFileDescriptor.createInputStream();

@@ -1,13 +1,15 @@
-import 'package:flutter/material.dart';
 import 'dart:async';
 
+import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_cache_manager/flutter_cache_manager.dart';
 import 'package:wallpaper_manager/wallpaper_manager.dart';
 
-void main() => runApp(MyApp());
+void main() => runApp(const MyApp());
 
 class MyApp extends StatefulWidget {
+  const MyApp({Key? key}) : super(key: key);
+
   @override
   _MyAppState createState() => _MyAppState();
 }
@@ -50,12 +52,10 @@ class _MyAppState extends State<MyApp> {
       _wallpaperFile = 'Loading';
     });
     String result;
-    var file = await DefaultCacheManager().getSingleFile(
-        'https://images.unsplash.com/photo-1542435503-956c469947f6');
+    var file = await DefaultCacheManager().getSingleFile('https://images.unsplash.com/photo-1542435503-956c469947f6');
     // Platform messages may fail, so we use a try/catch PlatformException.
     try {
-      result = await WallpaperManager.setWallpaperFromFile(
-          file.path, WallpaperManager.HOME_SCREEN);
+      result = await WallpaperManager.setWallpaperFromFile(file.path, WallpaperManager.HOME_SCREEN);
     } on PlatformException {
       result = 'Failed to get wallpaper.';
     }
@@ -76,12 +76,11 @@ class _MyAppState extends State<MyApp> {
       _wallpaperFileWithCrop = 'Loading';
     });
     String result;
-    var file = await DefaultCacheManager().getSingleFile(
-        'https://images.unsplash.com/photo-1542435503-956c469947f6');
+    var file = await DefaultCacheManager().getSingleFile('https://images.unsplash.com/photo-1542435503-956c469947f6');
     // Platform messages may fail, so we use a try/catch PlatformException.
     try {
-      result = await WallpaperManager.setWallpaperFromFileWithCrop(
-          file.path, WallpaperManager.HOME_SCREEN, 0, 0, 800, 800);
+      result =
+          await WallpaperManager.setWallpaperFromFileWithCrop(file.path, WallpaperManager.HOME_SCREEN, 0, 0, 800, 800);
     } on PlatformException {
       result = 'Failed to get wallpaper.';
     }
@@ -105,8 +104,7 @@ class _MyAppState extends State<MyApp> {
     var assetPath = 'assets/tmp1.jpg';
     // Platform messages may fail, so we use a try/catch PlatformException.
     try {
-      result = await WallpaperManager.setWallpaperFromAsset(
-          assetPath, WallpaperManager.HOME_SCREEN);
+      result = await WallpaperManager.setWallpaperFromAsset(assetPath, WallpaperManager.HOME_SCREEN);
     } on PlatformException {
       result = 'Failed to get wallpaper.';
     }
@@ -130,8 +128,8 @@ class _MyAppState extends State<MyApp> {
     var assetPath = 'assets/tmp1.jpg';
     // Platform messages may fail, so we use a try/catch PlatformException.
     try {
-      result = await WallpaperManager.setWallpaperFromAssetWithCrop(
-          assetPath, WallpaperManager.HOME_SCREEN, 0, 0, 800, 800);
+      result =
+          await WallpaperManager.setWallpaperFromAssetWithCrop(assetPath, WallpaperManager.HOME_SCREEN, 0, 0, 800, 800);
     } on PlatformException {
       result = 'Failed to get wallpaper.';
     }
@@ -157,35 +155,35 @@ class _MyAppState extends State<MyApp> {
             children: <Widget>[
               ElevatedButton(
                 onPressed: initPlatformState,
-                child: Text('Platform Version'),
+                child: const Text('Platform Version'),
               ),
               Center(
                 child: Text('Running on: $_platformVersion\n'),
               ),
               ElevatedButton(
                 onPressed: setWallpaperFromFile,
-                child: Text('Set wallpaper from file'),
+                child: const Text('Set wallpaper from file'),
               ),
               Center(
                 child: Text('Wallpaper status: $_wallpaperFile\n'),
               ),
               ElevatedButton(
                 onPressed: setWallpaperFromFileWithCrop,
-                child: Text('Set wallpaper from file with crop'),
+                child: const Text('Set wallpaper from file with crop'),
               ),
               Center(
                 child: Text('Wallpaper status: $_wallpaperFileWithCrop\n'),
               ),
               ElevatedButton(
                 onPressed: setWallpaperFromAsset,
-                child: Text('Set wallpaper from asset'),
+                child: const Text('Set wallpaper from asset'),
               ),
               Center(
                 child: Text('Wallpaper status: $_wallpaperAsset\n'),
               ),
               ElevatedButton(
                 onPressed: setWallpaperFromAssetWithCrop,
-                child: Text('Set wallpaper from asset with crop'),
+                child: const Text('Set wallpaper from asset with crop'),
               ),
               Center(
                 child: Text('Wallpaper status: $_wallpaperAssetWithCrop\n'),

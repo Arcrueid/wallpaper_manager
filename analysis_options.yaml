@@ -1,8 +1,9 @@
-# Defines a default set of lint rules enforced for
-# projects at Google. For details and rationale,
-# see https://github.com/dart-lang/pedantic#enabled-lints.
-include: package:pedantic/analysis_options.yaml
+include: package:flutter_lints/flutter.yaml
 
 linter:
-   rules:
-     - camel_case_types
+  rules:
+    sort_pub_dependencies: false
+    prefer_single_quotes: true
+    avoid_redundant_argument_values: true
+    camel_case_types: true
+    constant_identifier_names: false
